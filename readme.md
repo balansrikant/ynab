@@ -1,4 +1,6 @@
-# Application to replicate functionality of the software program You Need A Budget (YNAB) which allows you to
+# Application to replicate app 'You Need A Budget (YNAB)' 
+
+## Key features
 - Create a budget with spending limits for various categories
 - Set aside money for a rainy day fund
 - Set aside money for one off expenses
