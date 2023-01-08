@@ -1,0 +1,15 @@
+How to setup PyCharm
+1. Open Settings > Tools > Terminal
+2. Change Shell path from "powershell.exe" to "cmd.exe"
+
+How to setup Flask
+1. Get secret key from command line 
+(https://stackoverflow.com/questions/34902378/where-do-i-get-secret-key-for-flask)  
+**import os**  
+**os.urandom(12)**
+
+Conda commands used
+  - create environment
+    - conda create --name "env name" python=3.8
+  - export packages installed 
+    - conda env export --name ynab > environment.yml

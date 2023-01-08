@@ -1,0 +1,32 @@
+name: ynab
+channels:
+  - defaults
+dependencies:
+  - click==8.0.1=pyhd3eb1b0_0
+  - wincertstore==0.2=py39h2bbff1b_0
+  - psycopg2==2.8.6=py39hcd4344a_1
+  - sqlite==3.35.4=h2bbff1b_0
+  - krb5==1.17.1=hc04afaa_0
+  - zipp==3.4.1=pyhd3eb1b0_0
+  - markupsafe==2.0.1=py39h2bbff1b_0
+  - wheel==0.36.2=pyhd3eb1b0_0
+  - certifi
+  - setuptools==52.0.0=py39haa95532_0
+  - vs2015_runtime==14.27.29016=h5e58377_2
+  - flask==1.1.2=pyhd3eb1b0_0
+  - colorama==0.4.4=pyhd3eb1b0_0
+  - jinja2==3.0.0=pyhd3eb1b0_0
+  - zlib==1.2.11=h62dcd97_4
+  - tzdata==2020f=h52ac0ba_0
+  - python==3.9.4=h6244533_0
+  - openssl
+  - itsdangerous==2.0.1=pyhd3eb1b0_0
+  - tk==8.6.10=he774522_0
+  - werkzeug==1.0.1=pyhd3eb1b0_0
+  - importlib-metadata==3.10.0=py39haa95532_0
+  - ca-certificates
+  - pip==21.0.1=py39haa95532_0
+  - libpq==12.2=h3235a2c_0
+  - vc==14.2=h21ff451_1
+  - pandas
+prefix: C:\ProgramData\Anaconda3\envs\ynab
