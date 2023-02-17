@@ -29,4 +29,6 @@ dependencies:
   - libpq==12.2=h3235a2c_0
   - vc==14.2=h21ff451_1
   - pandas
+  - flake8
+  - dropbox
 prefix: C:\ProgramData\Anaconda3\envs\ynab

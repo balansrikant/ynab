@@ -8,6 +8,20 @@ How to setup Flask
 **import os**  
 **os.urandom(12)**
 
+Additional files to be created:
+- \ynab\dropbox_api\creds.json
+  {
+    "app_key": "",
+    "app_secret": "",
+    "access_code": ""
+  }
+
+- \ynab\dropbox_api\token.json
+  {
+    "refresh_token": "",
+    "access_token": ""
+  }
+
 Conda commands used
   - create environment
     - conda create --name "env name" python=3.8

@@ -1,0 +1,42 @@
+{
+  "logging": {
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+      "brief": {
+        "class": "logging.Formatter",
+        "datefmt": "%d-%b-%y %H:%M:%S",
+        "format": "%(levelname)-8s: %(name)s: %(message)s"
+      },
+      "single-line": {
+        "class": "logging.Formatter",
+        "datefmt": "%d-%b-%y %H:%M:%S",
+        "format": "%(asctime)s - %(levelname)-s - %(name)-4s -- %(module)s:%(funcName)-8s -- %(message)s"
+      }
+    },
+    "handlers": {
+      "console": {
+        "class": "logging.StreamHandler",
+        "formatter": "brief",
+        "stream": "ext://sys.stdout",
+        "level": "INFO"
+      },
+      "file": {
+        "class": "logging.handlers.RotatingFileHandler",
+        "formatter": "single-line",
+        "filename": "",
+        "mode": "a",
+        "maxBytes": 5120,
+        "backupCount": 5,
+        "level": "INFO"
+      }
+    },
+    "root": {
+      "handlers": [
+        "console",
+        "file"
+      ],
+      "level": "INFO"
+    }
+  }
+}
