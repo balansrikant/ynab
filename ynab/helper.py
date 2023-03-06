@@ -3,7 +3,7 @@ import json
 
 from logging.config import dictConfig
 
-from utilities import LOG_CONF, LOG_FILENAME
+from utilities import LOG_CONF, LOG_FILENAME, DATA_FILES
 from dropbox_api import DropboxLocal
 
 
@@ -25,9 +25,8 @@ setup_logging()
 
 def main():
     dbx = DropboxLocal()
-    files = dbx.get_files()
-    for file in files:
-        print(file['name'])
+    _ = dbx.get_file_metadata()
+    dbx.download_files()
 
 
 if __name__ == '__main__':

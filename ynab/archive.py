@@ -66,4 +66,73 @@ def helper():
     #     print(account)
     #     print(transactions[account].head())
     #     print('')
+
+    # file_name = os.path.basename(original_full_path)
+    # cleaned_df_filename = os.path.splitext(file_name)[0] + '_cleaned.csv'
+    # cleaned_df_full_path = Path.joinpath(cleaned_dir, cleaned_df_filename)
+    # file['cleaned_full_path'] = cleaned_df_full_path
+    # df.to_csv(cleaned_df_full_path, index=False)
+    # _logger.info(f"...cleaning up complete: {file['pathlib_path']}")
     pass
+
+def get_processed_dfs_old(cleaned_df_list: list) -> list:
+    """Load balances from csv into dataframe.
+
+    Args:
+        cleaned_df_list (list): list of dicts containing statement date, pathlib path, cleaned df
+
+    Returns:
+        list: list of dataframes containing processed dataframe along with metadata
+    """
+    def _process_ynab(df_param):
+        df_ynab = copy.deepcopy(df_param)
+
+        # rename columns
+        df_ynab = df_ynab.rename(columns={'date': 'Date', 'payee': 'Payee'})
+        df_ynab['Date'] = pd.to_datetime(df_ynab['Date'])
+
+        # remove balance rows
+        idx = df_ynab.loc[df_ynab['Payee'].str.contains('(?i)balance'), :].index
+        df_ynab.drop(idx, inplace=True)
+
+        # create additional ynab columns, format values
+        df_ynab['Category'] = ''
+        df_ynab['Memo'] = ''
+        df_ynab.loc[df_ynab['amount'] < 0, 'Outflow'] = df_ynab['amount'] * -1
+        df_ynab.loc[df_ynab['amount'] > 0, 'Inflow'] = df_ynab['amount']
+        df_ynab['Outflow'].fillna('', inplace=True)
+        df_ynab['Inflow'].fillna('', inplace=True)
+        cols = ['Date', 'Payee', 'Category', 'Memo', 'Outflow', 'Inflow']
+        df_ynab = df_ynab[cols]
+        df_ynab['Date'] = df_ynab['Date'].apply(lambda x: x.strftime('%Y-%m-%d'))
+
+        # process payees
+        df_ynab[['Payee', 'Category']] = df_ynab['Payee'].apply(transform_payee).apply(pd.Series)
+        return df_ynab
+
+    _processed_df_list = []
+    for file in cleaned_df_list:
+        _logger.info(f"processing file: {file['pathlib_path']}")
+        df_in = file["clean_df"]
+        _df = _process_ynab(df_in)
+        # file_name = os.path.basename(processed_full_path)
+        # ynab_df_filename = os.path.splitext(file_name)[0] + '_ynab.csv'
+        # ynab_df_full_path = Path.joinpath(ynab_dir, ynab_df_filename)
+        # df.to_csv(ynab_df_full_path, index=False)
+        _processed_df_list.append({'statement_date': file['statement_date'],
+                                   'pathlib_path': file['pathlib_path'],
+                                   'clean_df': df_in,
+                                   'processed_df': _df
+                                   }
+                                  )
+
+        # file_name = os.path.basename(original_full_path)
+        # cleaned_df_filename = os.path.splitext(file_name)[0] + '_cleaned.csv'
+        # cleaned_df_full_path = Path.joinpath(cleaned_dir, cleaned_df_filename)
+        # file['cleaned_full_path'] = cleaned_df_full_path
+        # df.to_csv(cleaned_df_full_path, index=False)
+        _logger.info(f"...processing complete: {file['pathlib_path']}")
+    return _processed_df_list
+
+
+

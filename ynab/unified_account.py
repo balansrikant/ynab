@@ -1,14 +1,47 @@
 import pandas as pd
 import os
+import logging
 
 from pathlib import Path
+
+from utilities import DATA_FILES
+from dropbox_api import DropboxLocal
+
+_logger = logging.getLogger(__name__)
 
 
 class UnifiedAccount:
     def __init__(self, data_dir: str) -> None:
-        self.accounts = pd.self.read_csv_into_df(
-            Path.joinpath(data_dir, 'account.csv'), sep='|')
-        self.populate_facts()
+        self._local_cache = False
+        self.files_dict = dict()
+        self._populate_file_path(data_dir)
+        self.download_files(self.files_dict)
+        self._local_cache = True
+
+    def _populate_file_paths(self, data_dir):
+        for file in DATA_FILES:
+            filename = file + ".csv"
+            local_path = str(Path.joinpath(data_dir, filename))
+            server_path = "/" + filename
+            self.files_dict[filename] = {
+                "local_path": local_path,
+                "server_path": server_path
+                }
+
+    def download_files(self, files_dict):
+        dbx = DropboxLocal()
+        _ = dbx.get_file_metadata()
+        dbx.download_files(files_dict)
+
+    def get_account(self):
+        filepath = self.files_dict["account"]["local_path"]
+        self.account = pd.read_csv(filepath, sep='|')
+        return self.account
+
+    def get_category(self):
+        filepath = self.files_dict["category"]["local_path"]
+        self.category = pd.read_csv(filepath, sep='|')
+        return self.category
 
     def populate_facts(self):
         self.df_transaction = pd.DataFrame()
