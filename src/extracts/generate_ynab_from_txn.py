@@ -1,15 +1,17 @@
-# Generates ynab file from transaction history
-# 1. place transaction history in this format 'yyyy-mm-dd_txn.csc' in the root folder
-# 2. run python generate_budget.py
+"""
+Generates ynab file from transaction history
 
+Steps
+1. place transaction history in this format 'yyyy-mm-dd_txn.csv' in the root folder
+2. run `python generate_ynab_from_txn.py`
+"""
 import logging
 import pandas as pd
 import copy
 
-from csv import DictReader
 from pathlib import Path
 
-from utilities import write_df, setup_logging, get_files_list, get_json
+from utilities import write_df, setup_logging, get_files_list
 from utilities import get_payee_mapping, get_category_mapping, get_balance, get_extracts_path
 
 
@@ -20,7 +22,7 @@ def transform_payee(original_payee: str) -> (str, str):
         original_payee (str): payee
 
     Returns:
-        tuple: contains friendly payee name, category
+        tuple: (friendly payee name, category)
     """
     payee_mappings = get_payee_mapping()
     category_mappings = get_category_mapping()
@@ -39,7 +41,15 @@ def transform_payee(original_payee: str) -> (str, str):
 
 
 def clean_df_ynab(df_param: pd.DataFrame) -> pd.DataFrame:
-    """generate ynab df"""
+    """Helper function, clean and transform the input dataframe (columns, data types etc)
+
+    Args:
+        df_param (dataframe): input dataframe
+
+    Returns:
+        dataframe: transformed dataframe
+
+    """
     df_ynab = copy.deepcopy(df_param)
 
     # rename columns
@@ -72,9 +82,7 @@ def generate_processed_files(extracts_dir: Path):
     Args:
         extracts_dir: (Path): working directory
     """
-    _logger.info("**********************************")
-    _logger.info("*** generating processed files ***")
-    _logger.info("**********************************")
+    _logger.info("... generating processed files")
 
     _logger.info("...get transaction files...")
     _transaction_files_list = []
