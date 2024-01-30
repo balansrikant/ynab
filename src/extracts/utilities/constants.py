@@ -8,7 +8,7 @@ Environment specific folders
 
 DATE_FORMAT = "%Y%m%d"
 DATE = datetime.now().strftime("%Y%m%d_%H%M%S")
-EXTRACTS_PATH = Path("C:/MyDocuments/ynab-files/extracts")
+EXTRACTS_PATH = Path("D:/MyDocuments/ynab-files/extracts")
 
 """
 Application configuration folders

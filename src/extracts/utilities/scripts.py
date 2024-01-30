@@ -163,7 +163,7 @@ def write_df(df_in: pd.DataFrame, path: str, sep: str = ",") -> bool:
 
 
 def get_payee_mapping() -> list:
-    payee_mapping_csv = Path.joinpath(CONFIG_DIR, "payee_mapping.csv")
+    payee_mapping_csv = Path.joinpath(EXTRACTS_PATH,"dimensions", "payee_mapping.csv")
     with open(payee_mapping_csv, 'r') as f:
         dict_reader = DictReader(f)
         payee_mappings = list(dict_reader)
@@ -172,7 +172,7 @@ def get_payee_mapping() -> list:
 
 
 def get_category_mapping() -> list:
-    category_mapping_csv = Path.joinpath(CONFIG_DIR, "category_mapping.csv")
+    category_mapping_csv = Path.joinpath(EXTRACTS_PATH,"dimensions", "category_mapping.csv")
     with open(category_mapping_csv, 'r') as f:
         dict_reader = DictReader(f)
         category_mappings = list(dict_reader)

@@ -84,7 +84,7 @@ def generate_processed_files(extracts_dir: Path):
     """
     _logger.info("... generating processed files")
 
-    _logger.info("...get transaction files...")
+    _logger.info("... get transaction files...")
     _transaction_files_list = []
     try:
         _files = extracts_dir.glob(f"*.csv")
